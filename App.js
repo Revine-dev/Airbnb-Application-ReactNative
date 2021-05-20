@@ -4,11 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
+import AroundMeScreen from "./containers/AroundMe";
+import RoomScreen from "./containers/RoomScreen";
+import LeftBtn from "./components/LeftBtn";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -57,11 +60,16 @@ export default function App() {
       ) : (
         // User is signed in
         <Stack.Navigator>
-          <Stack.Screen name="Tab" options={{ headerShown: false }}>
+          <Stack.Screen
+            name="Home"
+            options={{
+              headerShown: false,
+            }}
+          >
             {() => (
               <Tab.Navigator
                 tabBarOptions={{
-                  activeTintColor: "tomato",
+                  activeTintColor: "red",
                   inactiveTintColor: "gray",
                 }}
               >
@@ -79,32 +87,30 @@ export default function App() {
                       <Stack.Screen
                         name="Home"
                         options={{
-                          title: "My App",
-                          headerStyle: { backgroundColor: "red" },
-                          headerTitleStyle: { color: "white" },
+                          headerTitle: () => {
+                            return (
+                              <FontAwesome5
+                                name="airbnb"
+                                size={30}
+                                color="red"
+                              />
+                            );
+                          },
+                          headerStyle: { backgroundColor: "white" },
                         }}
                       >
                         {() => <HomeScreen />}
-                      </Stack.Screen>
-
-                      <Stack.Screen
-                        name="Profile"
-                        options={{
-                          title: "User Profile",
-                        }}
-                      >
-                        {() => <ProfileScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
                 <Tab.Screen
-                  name="Settings"
+                  name="Around me"
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "Around me",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons
-                        name={"ios-options"}
+                        name={"md-location-outline"}
                         size={size}
                         color={color}
                       />
@@ -114,16 +120,74 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Settings"
-                        options={{ title: "Settings", tabBarLabel: "Settings" }}
+                        name="Around me"
+                        options={{
+                          headerTitle: () => {
+                            return (
+                              <FontAwesome5
+                                name="airbnb"
+                                size={30}
+                                color="red"
+                              />
+                            );
+                          },
+                        }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <AroundMeScreen />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+                <Tab.Screen
+                  name="My Profile"
+                  options={{
+                    tabBarLabel: "My Profile",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons
+                        name={"md-person-circle-sharp"}
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="My Profile"
+                        options={{
+                          headerTitle: () => {
+                            return (
+                              <FontAwesome5
+                                name="airbnb"
+                                size={30}
+                                color="red"
+                              />
+                            );
+                          },
+                        }}
+                      >
+                        {() => <ProfileScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
               </Tab.Navigator>
             )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="Room"
+            options={{
+              headerTitle: () => {
+                return <FontAwesome5 name="airbnb" size={30} color="red" />;
+              },
+              headerLeft: () => {
+                return <LeftBtn></LeftBtn>;
+              },
+              headerStyle: { backgroundColor: "white" },
+            }}
+          >
+            {() => <RoomScreen userToken={userToken} />}
           </Stack.Screen>
         </Stack.Navigator>
       )}
