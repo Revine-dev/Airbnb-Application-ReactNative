@@ -1,45 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  Image,
+  TouchableHighlight,
+} from "react-native";
 import axios from "axios";
 import styles from "../components/CommonStyles";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 
 export default function AroundMe() {
+  const navigation = useNavigation();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [coords, setCoords] = useState();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const askPermission = async () => {
-      try {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status === "denied") {
+    const getPoints = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === "granted") {
+        let { coords } = await Location.getCurrentPositionAsync({});
+        setCoords(coords);
+        const response = await axios.get(
+          `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${coords.latitude}&longitude=${coords.longitude}`
+        );
+        if (response.data.length === 0) {
+          const response = await axios.get(
+            `https://express-airbnb-api.herokuapp.com/rooms`
+          );
+          setCoords({ latitude: 48.8564449, longitude: 2.4002913 });
+          setData(response.data);
           setIsLoading(false);
-          return setError("You need to allow permissions to continue");
-        } else if (status === "granted") {
-          let { coords } = await Location.getCurrentPositionAsync({});
-          setCoords(coords);
-          setIsLoading(false);
+          return true;
         }
-      } catch (error) {
-        alert("Sorry, an error has occured.");
-        console.log(error.message);
+        setData(response.data);
+        setIsLoading(false);
+      } else {
+        const response = await axios.get(
+          "https://express-airbnb-api.herokuapp.com/rooms"
+        );
+        setCoords({ latitude: 48.8564449, longitude: 2.4002913 });
+        setData(response.data);
+        setIsLoading(false);
       }
     };
-    askPermission();
+    getPoints();
   }, []);
-
-  const markers = [
-    {
-      id: 1,
-      latitude: 48.8564449,
-      longitude: 2.4002913,
-      title: "Le Reacteur",
-      description: "La formation des champions !",
-    },
-  ];
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -66,17 +76,40 @@ export default function AroundMe() {
           }}
           showsUserLocation={true}
         >
-          {markers.map((marker) => {
+          {data.map((marker) => {
             return (
               <MapView.Marker
-                key={marker.id}
+                key={marker._id}
                 coordinate={{
-                  latitude: marker.latitude,
-                  longitude: marker.longitude,
+                  latitude: marker.location[1],
+                  longitude: marker.location[0],
                 }}
                 title={marker.title}
                 description={marker.description}
-              />
+              >
+                <MapView.Callout tooltip style={styles.customView}>
+                  <TouchableHighlight
+                    onPress={() =>
+                      navigation.navigate("Room", { roomId: marker._id })
+                    }
+                  >
+                    <View style={styles.calloutText}>
+                      <Text
+                        style={{ fontWeight: "bold", textAlign: "center" }}
+                        numberOfLines={1}
+                      >
+                        {marker.title}
+                      </Text>
+                      <Text numberOfLines={1}>{marker.description}</Text>
+                      <Image
+                        source={{ uri: marker.photos[0].url }}
+                        resizeMode="cover"
+                        style={styles.calloutImg}
+                      ></Image>
+                    </View>
+                  </TouchableHighlight>
+                </MapView.Callout>
+              </MapView.Marker>
             );
           })}
         </MapView>

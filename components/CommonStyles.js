@@ -31,6 +31,22 @@ const CommonStyles = StyleSheet.create({
     height: 50,
     borderRadius: 50,
   },
+  customView: {
+    backgroundColor: "white",
+    padding: 5,
+    borderRadius: 8,
+  },
+  calloutText: {
+    width: 300,
+  },
+  calloutImg: {
+    width: "100%",
+    height: 100,
+  },
+  calloutMore: {
+    marginTop: 5,
+    textAlign: "center",
+  },
 });
 
 export default CommonStyles;

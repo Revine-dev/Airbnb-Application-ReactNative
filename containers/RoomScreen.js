@@ -6,6 +6,7 @@ import {
   Dimensions,
   View,
   Image,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import axios from "axios";
@@ -14,6 +15,7 @@ import styles from "../components/CommonStyles";
 import { AntDesign } from "@expo/vector-icons";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import LottieView from "lottie-react-native";
+import MapView from "react-native-maps";
 
 const { width } = Dimensions.get("window");
 
@@ -48,7 +50,7 @@ export default function RoomScreen({ userToken }) {
   return loading && data ? (
     <LottieView source={require("../assets/loading_room.json")} autoPlay loop />
   ) : (
-    <View>
+    <ScrollView>
       <View style={[styles.roomsPreview, { height: 300 }]}>
         <View style={stylesCarousel.container}>
           <SwiperFlatList
@@ -114,12 +116,32 @@ export default function RoomScreen({ userToken }) {
             {displayMore ? "See less" : "See more"}
           </Text>
           {displayMore ? (
-            <AntDesign name="caretup" size={16} color="rgba(0,0,0,.7)" />
+            <AntDesign name="caretup" size={14} color="rgba(0,0,0,.7)" />
           ) : (
-            <AntDesign name="caretdown" size={16} color="rgba(0,0,0,.7)" />
+            <AntDesign name="caretdown" size={14} color="rgba(0,0,0,.7)" />
           )}
         </TouchableOpacity>
       </View>
-    </View>
+
+      <MapView
+        style={{ width: "100%", height: 250, marginTop: 20 }}
+        initialRegion={{
+          latitude: data.location[1],
+          longitude: data.location[0],
+          latitudeDelta: 0.2,
+          longitudeDelta: 0.2,
+        }}
+        showsUserLocation={true}
+      >
+        <MapView.Marker
+          coordinate={{
+            latitude: data.location[1],
+            longitude: data.location[0],
+          }}
+          title={data.title}
+          description={data.description}
+        />
+      </MapView>
+    </ScrollView>
   );
 }
