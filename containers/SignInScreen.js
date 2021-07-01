@@ -33,8 +33,7 @@ export default function SignInScreen({ setToken }) {
           password,
         }
       );
-
-      setToken(response.data.token);
+      setToken(response.data.token, response.data.id);
     } catch (error) {
       setLoading(false);
       if (error.response.status === 401) {
@@ -66,7 +65,7 @@ export default function SignInScreen({ setToken }) {
         <Link
           name="Create an account"
           action={() => {
-            navigation.navigate("SignUp");
+            navigation.navigate("Register");
           }}
         />
       </View>

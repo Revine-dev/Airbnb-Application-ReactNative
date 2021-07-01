@@ -33,9 +33,9 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item, index }) => (
     <TouchableOpacity
-      style={styles.rooms}
+      style={index === data.length - 1 ? styles.roomsLast : styles.rooms}
       onPress={() => {
         navigation.navigate("Room", { roomId: item._id });
       }}

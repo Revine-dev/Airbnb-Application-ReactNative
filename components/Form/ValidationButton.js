@@ -1,15 +1,16 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 
-const ValidationButton = ({ name, fn }) => {
+const ValidationButton = ({ name, fn, customColor }) => {
   const styles = StyleSheet.create({
     container: {
       alignItems: "center",
       justifyContent: "center",
+      marginTop: 10,
     },
     btn: {
       borderWidth: 1,
-      borderColor: "red",
+      borderColor: customColor ? customColor : "lightgray",
       borderRadius: 20,
       width: "50%",
       padding: 10,
@@ -22,7 +23,6 @@ const ValidationButton = ({ name, fn }) => {
 
   if (!fn) {
     fn = () => {
-      console.log("fr/en");
       return;
     };
   }

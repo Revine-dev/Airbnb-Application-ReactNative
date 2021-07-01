@@ -54,7 +54,7 @@ export default function AroundMe() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {isLoading ? (
-        <ActivityIndicator style={styles.loading} />
+        <ActivityIndicator style={styles.loading} size="large" />
       ) : error || !coords ? (
         <Text
           style={{

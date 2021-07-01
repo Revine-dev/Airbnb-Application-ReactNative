@@ -10,7 +10,11 @@ const CommonStyles = StyleSheet.create({
     margin: 10,
     paddingBottom: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "gray",
+    borderBottomColor: "lightgray",
+  },
+  roomsLast: {
+    borderBottomColor: "transparent",
+    marginBottom: 5,
   },
   roomsPreview: {
     width: "100%",

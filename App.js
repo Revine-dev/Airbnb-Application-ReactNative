@@ -19,14 +19,16 @@ const Stack = createStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [userID, setUserID] = useState(null);
 
-  const setToken = async (token) => {
+  const setToken = async (token, id) => {
     if (token) {
       AsyncStorage.setItem("userToken", token);
     } else {
       AsyncStorage.removeItem("userToken");
     }
 
+    setUserID(id);
     setUserToken(token);
   };
 
@@ -50,10 +52,10 @@ export default function App() {
       {isLoading ? null : userToken === null ? ( // We haven't finished checking for the token yet
         // No token found, user isn't signed in
         <Stack.Navigator>
-          <Stack.Screen name="SignIn">
+          <Stack.Screen name="Login">
             {() => <SignInScreen setToken={setToken} />}
           </Stack.Screen>
-          <Stack.Screen name="SignUp">
+          <Stack.Screen name="Register">
             {() => <SignUpScreen setToken={setToken} />}
           </Stack.Screen>
         </Stack.Navigator>
@@ -167,7 +169,13 @@ export default function App() {
                           },
                         }}
                       >
-                        {() => <ProfileScreen setToken={setToken} />}
+                        {() => (
+                          <ProfileScreen
+                            setToken={setToken}
+                            token={userToken}
+                            id={userID}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

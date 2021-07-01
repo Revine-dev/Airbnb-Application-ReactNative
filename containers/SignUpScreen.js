@@ -41,7 +41,7 @@ export default function SignUpScreen({ setToken }) {
           password,
         }
       );
-      setToken(response.data.token);
+      setToken(response.data.token, response.data.id);
     } catch (error) {
       setLoading(false);
       if (error.response.data && error.response.data.error) {

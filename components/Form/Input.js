@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, TextInput, Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const Input = ({ name, customField, onChange, type, numberOfLines }) => {
+const Input = ({ name, customField, onChange, type, numberOfLines, value }) => {
   const [displayPassword, setDisplayPassword] = useState(true);
 
   const styles = StyleSheet.create({
@@ -11,13 +11,13 @@ const Input = ({ name, customField, onChange, type, numberOfLines }) => {
       color: "black",
       padding: 5,
       borderBottomWidth: 1,
-      borderBottomColor: "red",
+      borderBottomColor: "lightgray",
       position: "relative",
     },
     multiline: {
       height: 60,
       borderWidth: 1,
-      borderColor: "red",
+      borderColor: "lightgray",
       textAlignVertical: "top",
     },
     show: {
@@ -40,14 +40,17 @@ const Input = ({ name, customField, onChange, type, numberOfLines }) => {
       {type == "textarea" ? (
         <TextInput
           placeholder={name}
+          value={value}
           onChangeText={onChange}
           style={[styles.input, styles.multiline]}
           multiline={true}
+          value={value && value}
           numberOfLines={numberOfLines}
         ></TextInput>
       ) : (
         <TextInput
           placeholder={name}
+          value={value}
           secureTextEntry={password && displayPassword ? true : false}
           onChangeText={onChange}
           style={styles.input}
