@@ -10,8 +10,8 @@
 [![CSS](https://user-images.githubusercontent.com/59733143/123686862-8bd66900-d850-11eb-97c5-1cb2889aaf39.png)](https://developer.mozilla.org/en-US/docs/Glossary/CSS)
 [![REACT](https://user-images.githubusercontent.com/59733143/123792579-0fd83180-d8e1-11eb-992e-529cacb03bf0.png)](https://fr.reactjs.org/)
 [![REACTNATIVE](https://user-images.githubusercontent.com/59733143/124145182-de03ce00-da8c-11eb-955e-5343818d3293.png)](https://reactnative.dev/)
+[![EXPO](https://user-images.githubusercontent.com/59733143/124146726-56b75a00-da8e-11eb-898d-fc0bbb3467d2.png)](https://expo.io/)
 
-🔧 Made with Expo
 
 ⚒ Features : 
 - Lookup all rooms
