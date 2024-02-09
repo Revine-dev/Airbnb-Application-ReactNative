@@ -13,9 +13,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rempowa.Airbnb"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "24134608-ddcd-4234-8dbb-f61978cc76e9"
+      }
+    },
+    "owner": "rempowa"
   }
 }

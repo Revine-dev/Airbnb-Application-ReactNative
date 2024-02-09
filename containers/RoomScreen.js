@@ -29,7 +29,7 @@ export default function RoomScreen({ userToken }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://express-airbnb-api.herokuapp.com/rooms/" + params.roomId
+          "https://airbnb-api-eulq.onrender.com/rooms/" + params.roomId
         );
         setData(response.data);
         setLoading(false);
@@ -88,11 +88,13 @@ export default function RoomScreen({ userToken }) {
             {helpers.generateStars(data.ratingValue, data.reviews)}
           </View>
 
-          <Image
-            source={{ uri: data.user.account.photo.url }}
-            resizeMode="cover"
-            style={styles.roomsOwner}
-          />
+          {data.user?.account?.photo && (
+            <Image
+              source={{ uri: data.user.account.photo.url }}
+              resizeMode="cover"
+              style={styles.roomsOwner}
+            />
+          )}
         </View>
       </View>
       <View style={{ padding: 5 }}>
@@ -126,8 +128,8 @@ export default function RoomScreen({ userToken }) {
       <MapView
         style={{ width: "100%", height: 250, marginTop: 20 }}
         initialRegion={{
-          latitude: data.location[1],
-          longitude: data.location[0],
+          latitude: data.loc[1],
+          longitude: data.loc[0],
           latitudeDelta: 0.2,
           longitudeDelta: 0.2,
         }}
@@ -135,8 +137,8 @@ export default function RoomScreen({ userToken }) {
       >
         <MapView.Marker
           coordinate={{
-            latitude: data.location[1],
-            longitude: data.location[0],
+            latitude: data.loc[1],
+            longitude: data.loc[0],
           }}
           title={data.title}
           description={data.description}

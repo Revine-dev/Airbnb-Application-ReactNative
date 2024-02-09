@@ -33,10 +33,11 @@ export default function SignUpScreen({ setToken }) {
 
     try {
       const response = await axios.post(
-        "https://express-airbnb-api.herokuapp.com/user/sign_up",
+        "https://airbnb-api-eulq.onrender.com/user/sign_up",
         {
           email,
           username,
+          name: username,
           description,
           password,
         }
@@ -83,7 +84,7 @@ export default function SignUpScreen({ setToken }) {
       <Link
         name="Login to your account"
         action={() => {
-          navigation.navigate("SignIn");
+          navigation.navigate("Login");
         }}
       />
     </KeyboardAwareScrollView>

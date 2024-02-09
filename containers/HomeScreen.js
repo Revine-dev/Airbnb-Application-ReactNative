@@ -22,7 +22,7 @@ export default function HomeScreen() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://express-airbnb-api.herokuapp.com/rooms"
+          "https://airbnb-api-eulq.onrender.com/rooms"
         );
         setData(response.data);
         setLoading(false);
@@ -61,11 +61,13 @@ export default function HomeScreen() {
             <Text>{item.title}</Text>
             {helpers.generateStars(item.ratingValue, item.reviews)}
           </View>
-          <Image
-            source={{ uri: item.user.account.photo.url }}
-            resizeMode="cover"
-            style={styles.roomsOwner}
-          />
+          {item.user.account?.photo && (
+            <Image
+              source={{ uri: item.user.account.photo.url }}
+              resizeMode="cover"
+              style={styles.roomsOwner}
+            />
+          )}
         </View>
       </View>
     </TouchableOpacity>

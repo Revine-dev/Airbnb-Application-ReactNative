@@ -27,7 +27,7 @@ export default function SignInScreen({ setToken }) {
 
     try {
       const response = await axios.post(
-        "https://express-airbnb-api.herokuapp.com/user/log_in",
+        "https://airbnb-api-eulq.onrender.com/user/log_in",
         {
           email,
           password,

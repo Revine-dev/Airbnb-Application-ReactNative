@@ -26,22 +26,23 @@ export default function AroundMe() {
         let { coords } = await Location.getCurrentPositionAsync({});
         setCoords(coords);
         const response = await axios.get(
-          `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${coords.latitude}&longitude=${coords.longitude}`
+          `https://airbnb-api-eulq.onrender.com/rooms/around?latitude=${coords.latitude}&longitude=${coords.longitude}`
         );
-        if (response.data.length === 0) {
+        if (response.data.length === 0 || !response.data) {
           const response = await axios.get(
-            `https://express-airbnb-api.herokuapp.com/rooms`
+            `https://airbnb-api-eulq.onrender.com/rooms`
           );
           setCoords({ latitude: 48.8564449, longitude: 2.4002913 });
           setData(response.data);
           setIsLoading(false);
           return true;
+        } else {
+          setData(response.data);
+          setIsLoading(false);
         }
-        setData(response.data);
-        setIsLoading(false);
       } else {
         const response = await axios.get(
-          "https://express-airbnb-api.herokuapp.com/rooms"
+          "https://airbnb-api-eulq.onrender.com/rooms"
         );
         setCoords({ latitude: 48.8564449, longitude: 2.4002913 });
         setData(response.data);
@@ -81,8 +82,8 @@ export default function AroundMe() {
               <MapView.Marker
                 key={marker._id}
                 coordinate={{
-                  latitude: marker.location[1],
-                  longitude: marker.location[0],
+                  latitude: marker.loc[1],
+                  longitude: marker.loc[0],
                 }}
                 title={marker.title}
                 description={marker.description}

@@ -36,7 +36,7 @@ export default function ProfileScreen({ setToken, token, id }) {
 
       try {
         const response = await axios.get(
-          "https://express-airbnb-api.herokuapp.com/user/" + id,
+          "https://airbnb-api-eulq.onrender.com/user/" + id,
           {
             headers: {
               Authorization: "Bearer " + token,
@@ -107,7 +107,7 @@ export default function ProfileScreen({ setToken, token, id }) {
       });
 
       uploadResponse = await axios.put(
-        "https://express-airbnb-api.herokuapp.com/user/upload_picture/",
+        "https://airbnb-api-eulq.onrender.com/user/upload_picture/",
         formData,
         {
           headers: {
@@ -145,7 +145,7 @@ export default function ProfileScreen({ setToken, token, id }) {
 
     try {
       const response = await axios.put(
-        "https://express-airbnb-api.herokuapp.com/user/update",
+        "https://airbnb-api-eulq.onrender.com/user/update",
         {
           email,
           username: userName,
@@ -170,6 +170,8 @@ export default function ProfileScreen({ setToken, token, id }) {
 
   return isLoading ? (
     <LottieView source={require("../assets/loading_room.json")} autoPlay loop />
+  ) : error ? (
+    <Text>An error has occured, please try again later</Text>
   ) : (
     <KeyboardAwareScrollView>
       {isUploading && (
